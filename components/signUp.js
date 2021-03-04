@@ -1,0 +1,124 @@
+import 'react-native-gesture-handler';
+import React, { Component } from 'react';
+import { 
+    Text, 
+    TextInput, 
+    View, 
+    Button, 
+    StyleSheet, 
+    Alert, 
+    TouchableOpacity
+} from 'react-native';
+
+class SignUp extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            password: ''
+        }
+    }
+
+    handleEmailInput = (text) => {
+    //validation here
+        this.setState({email: text})
+    }
+
+    handlePasswordInput = (text) => {
+    //validation here
+        this.setState({password: text})
+    }
+
+    handleFirstName = (text) => {
+        this.setState({ first_name: text})
+    }
+
+    handleLastName = (text) => {
+        this.setState({ last_name: text})
+    }
+
+    signUpFunction = () => {
+        Alert.alert('Signing up...')
+        console.log(JSON.stringify({
+            email: this.state.email,
+            password: this.state.password
+        }));
+        //handles the signing up function
+        return fetch('http://10.0.2.2:3333/api/1.0.0/user',
+        { 
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                first_name: this.state.first_name,
+                last_name: this.state.last_name,
+                email: this.state.email,
+                password: this.state.password
+            })
+        })
+        .then((response) => {
+            Alert.alert("Signed up.");
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+    render(){
+        return(
+            <View>
+                <View style={styles.flexboxSide}>
+                    <TextInput style={styles.textCustom} 
+                        placeholder="First name"
+                        onChangeText = {this.handleFirstName}
+                    />
+                    <TextInput style={styles.textCustom} 
+                        placeholder="Last name"
+                        onChangeText = {this.handleLastName}
+                    />
+                    <TextInput style={styles.textCustom} 
+                        placeholder="Email"
+                        onChangeText = {this.handleEmailInput}
+                    />
+                    <TextInput style={styles.textCustom} 
+                        placeholder="Password"
+                        onChangeText = {this.handlePasswordInput}
+                        secureTextEntry = {true}
+                    />
+                </View>
+              <Button
+                  title="Sign Up"
+                  onPress={() => this.signUpFunction()}
+              />
+              <Button
+                title="Log In"
+                onPress={() => this.props.navigation.navigate('SignIn')}
+              />
+            </View>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    flexbox: {
+        flex: 1,
+        flexDirection: "row",
+    },
+    flexboxSide: {
+        flexDirection: "column",
+        flex: .5
+    },
+    buttonCustom: {
+        elevation: 1,
+        backgroundColor: "#815481",
+        borderRadius: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 12
+      },
+      textCustom: {
+        fontSize: 15,
+      }
+});
+
+export default SignUp;
