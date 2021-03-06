@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import { 
     Text, 
@@ -9,7 +10,8 @@ import {
     TouchableOpacity 
   } from 'react-native';
 
-global.sessionToken = 'Test';
+global.sessionToken = 'Token';
+global.sessionID = 'ID';
 
 class SignIn extends Component{
     constructor(props){

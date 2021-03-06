@@ -17,52 +17,29 @@ class HomeLoggedIn extends Component{
         first_name: 'TestName',
         last_name: '',
         email: '',
-        token: global.sessionToken
+        token: global.sessionToken,
+        userData: [],
+        isLoaded: false
     }
-}
-
-handleLogOut = (email, password, token) => {
-  Alert.alert('Logging In')
-  //handles the log in
-  console.log(JSON.stringify({
-      email: this.state.email,
-      password: this.state.password
-  }));
-  return fetch('http://10.0.2.2:3333/api/1.0.0/user/login',
-  { 
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-          email: this.state.email,
-          password: this.state.password
-      })
-  })
-  .then((response) => {
-      Alert.alert("Logged In.");
-  })
-  .catch((error) => {
-      console.error(error);
-  });
   }
 
     render(){
-        return(
-            <View>
-            <Text> Welcome, {this.first_name}</Text>
-              <Button
-                  title="View Account"
-                  onPress={() => this.props.navigation.navigate('Account')}
-              />
-              <Button
-                title="Search"
-                onPress={() => this.props.navigation.navigate('Search')}
-              />
-              <Button
-                title="Log Out"
-                onPress={() => this.handleLogOut}
-              />
-            </View>
-        );
+      return(
+        <View>
+          <Button 
+            title="View Account"
+            onPress={() => this.props.navigation.navigate("Account")}
+            />
+          <Button 
+            title="Search"
+            onPress={() => this.props.navigation.navigate("Search")}
+            />
+          <Button 
+            title="Logout"
+            onPress={() => this.props.navigation.navigate("Home")}
+            />
+        </View>
+      );
     }
 }
 

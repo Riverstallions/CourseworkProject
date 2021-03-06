@@ -1,6 +1,5 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
 import { 
     Text, 
     TextInput, 
@@ -25,18 +24,24 @@ class Search extends Component{
         }
     }
 
+    componentDidMount(){
+        this.listLocations();
+    }
+
     handleSearchInput = (text) => {
         this.setState({query: text})
     }
 
     listLocations = () => {
-        console.log("Search token: " + this.state.token);
-        return fetch('http://10.0.2.2:3333/api/1.0.0/find',
+        return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + query,
         { 
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': this.state.token
+            },
+            params: {
+
             }
         })
         .then((response) => response.json())
@@ -44,33 +49,7 @@ class Search extends Component{
             this.setState({
                 locationListData: responseJson
             });
-            console.log("Location list data retrieved");
         })
-        .catch((error) => {
-            console.error(error);
-        });
-    }
-
-    componentDidMount(){
-        this.listLocations();
-    }
-    
-    searchLocations = () => {
-        //handles the searching function
-        return fetch('http://10.0.2.2:3333/api/1.0.0/find',
-        { 
-            method: 'GET',
-            headers: { 
-                'Content-Type': 'application/json',
-                'X-Authorization': this.state.token
-            }
-        })
-        .then((response) => response.json())
-        .then((responseJson) => {
-            this.setState({
-              locationListData: responseJson,
-            });
-        })    
         .catch((error) => {
             console.error(error);
         });
@@ -93,8 +72,6 @@ class Search extends Component{
                 viewOne: true,
                 oneLocationData: responseJson
             });
-            console.log(responseJson)
-            console.log("viewOne done.")
         })    
         .catch((error) => {
             console.error(error);
@@ -109,7 +86,10 @@ class Search extends Component{
                     <Text>City: {this.state.oneLocationData.location_town}, &nbsp; </Text>
                     <Text>Overall rating: {this.state.oneLocationData.avg_overall_rating}. &nbsp; </Text>
                     
-                    <Button title="Submit Review"/>
+                    <Button 
+                        title="Submit Review"
+                        onPress={() => this.viewOneLocation(item.location_id)}
+                    />
                 </View>
             );
         }else{
@@ -118,7 +98,7 @@ class Search extends Component{
                     <TextInput 
                         style={styles.textCustom} 
                         placeholder="Search..."
-                        onChangeText = {this.searchLocations}
+                        onChangeText = {this.handleSearchInput}
                     />
                     <Button
                         title="Go"
@@ -139,7 +119,7 @@ class Search extends Component{
                                 </Text>
                             </View>
                         )}
-                        keyExtractor={({location_id}, index) => location_id}
+                        keyExtractor={({location_id}, index) => location_id.toString()}
                     />
                 </View>
             );

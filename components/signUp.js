@@ -39,12 +39,7 @@ class SignUp extends Component{
         this.setState({ last_name: text})
     }
 
-    signUpFunction = () => {
-        Alert.alert('Signing up...')
-        console.log(JSON.stringify({
-            email: this.state.email,
-            password: this.state.password
-        }));
+    signUp = () => {
         //handles the signing up function
         return fetch('http://10.0.2.2:3333/api/1.0.0/user',
         { 
@@ -58,43 +53,41 @@ class SignUp extends Component{
             })
         })
         .then((response) => {
-            Alert.alert("Signed up.");
+            this.props.navigation.navigate('SignIn')
         })
         .catch((error) => {
             console.error(error);
         });
     }
 
-    render(){
+    render() {
         return(
             <View>
-                <View style={styles.flexboxSide}>
-                    <TextInput style={styles.textCustom} 
-                        placeholder="First name"
-                        onChangeText = {this.handleFirstName}
-                    />
-                    <TextInput style={styles.textCustom} 
-                        placeholder="Last name"
-                        onChangeText = {this.handleLastName}
-                    />
-                    <TextInput style={styles.textCustom} 
-                        placeholder="Email"
-                        onChangeText = {this.handleEmailInput}
-                    />
-                    <TextInput style={styles.textCustom} 
-                        placeholder="Password"
-                        onChangeText = {this.handlePasswordInput}
-                        secureTextEntry = {true}
-                    />
-                </View>
-              <Button
-                  title="Sign Up"
-                  onPress={() => this.signUpFunction()}
-              />
-              <Button
-                title="Log In"
-                onPress={() => this.props.navigation.navigate('SignIn')}
-              />
+                <TextInput style={styles.textCustom} 
+                    placeholder="First name"
+                    onChangeText = {this.handleFirstName}
+                />
+                <TextInput style={styles.textCustom} 
+                    placeholder="Last name"
+                    onChangeText = {this.handleLastName}
+                />
+                <TextInput style={styles.textCustom} 
+                    placeholder="Email"
+                    onChangeText = {this.handleEmailInput}
+                />
+                <TextInput style={styles.textCustom} 
+                    placeholder="Password"
+                    onChangeText = {this.handlePasswordInput}
+                    secureTextEntry = {true}
+                />
+                <Button
+                    title="Sign Up"
+                    onPress={() => this.signUp()}
+                />
+                <Button
+                    title="Log In"
+                    onPress={() => this.props.navigation.navigate('SignIn')}
+                />
             </View>
         );
     }
