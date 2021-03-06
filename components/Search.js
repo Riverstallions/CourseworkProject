@@ -33,15 +33,12 @@ class Search extends Component{
     }
 
     listLocations = () => {
-        return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + query,
+        return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + this.state.query,
         { 
             method: 'GET',
             headers: { 
                 'Content-Type': 'application/json',
                 'X-Authorization': this.state.token
-            },
-            params: {
-
             }
         })
         .then((response) => response.json())
@@ -72,7 +69,7 @@ class Search extends Component{
                 viewOne: true,
                 oneLocationData: responseJson
             });
-        })    
+        })
         .catch((error) => {
             console.error(error);
         });
@@ -98,7 +95,7 @@ class Search extends Component{
                     <TextInput 
                         style={styles.textCustom} 
                         placeholder="Search..."
-                        onChangeText = {this.handleSearchInput}
+                        onChangeText={() => this.handleSearchInput}
                     />
                     <Button
                         title="Go"

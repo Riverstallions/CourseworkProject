@@ -53,8 +53,8 @@ class SignIn extends Component{
                 token: responseJson.token
             });
             global.sessionToken = responseJson.token;
+            global.sessionID = responseJson.id;
             this.props.navigation.navigate('HomeLoggedIn');
-            console.log("Log in token: " + global.sessionToken);
         })
         .catch((error) => {
             console.error(error);

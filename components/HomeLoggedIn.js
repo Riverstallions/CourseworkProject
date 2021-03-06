@@ -23,6 +23,32 @@ class HomeLoggedIn extends Component{
     }
   }
 
+  LogOut = () => {
+    //handles the log out process:
+    //API end point for logout, with the Authorisation header
+    //Sets the loggedIn status to false, empties both the global and local token variables,
+    //Navigates to the Home screen
+    return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout',
+    { 
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Authorization': this.state.token
+        },
+    })
+    .then(() => {
+        this.setState({
+            loggedIn: false,
+            token: ''
+        });
+        this.props.navigation.navigate('Home');
+        global.sessionToken= '';
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+
     render(){
       return(
         <View>
@@ -36,7 +62,7 @@ class HomeLoggedIn extends Component{
             />
           <Button 
             title="Logout"
-            onPress={() => this.props.navigation.navigate("Home")}
+            onPress={() => this.LogOut()}
             />
         </View>
       );

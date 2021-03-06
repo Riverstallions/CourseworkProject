@@ -21,7 +21,7 @@ class SignUp extends Component{
         }
     }
 
-    handleEmailInput = (text) => {
+    handleEmail = (text) => {
     //validation here
         this.setState({email: text})
     }
@@ -52,7 +52,7 @@ class SignUp extends Component{
                 password: this.state.password
             })
         })
-        .then((response) => {
+        .then(() => {
             this.props.navigation.navigate('SignIn')
         })
         .catch((error) => {
@@ -73,12 +73,12 @@ class SignUp extends Component{
                 />
                 <TextInput style={styles.textCustom} 
                     placeholder="Email"
-                    onChangeText = {this.handleEmailInput}
+                    onChangeText = {this.handleEmail}
                 />
                 <TextInput style={styles.textCustom} 
                     placeholder="Password"
-                    onChangeText = {this.handlePasswordInput}
                     secureTextEntry = {true}
+                    onChangeText = {this.handlePasswordInput}
                 />
                 <Button
                     title="Sign Up"
