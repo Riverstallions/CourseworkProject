@@ -73,7 +73,6 @@ class Account extends Component{
         email: this.state.userData.email,
         reviews: this.state.userData.reviews,
       });
-      console.log(this.state.reviews)
     })
     .catch((error) => {
         console.error(error);
@@ -92,8 +91,7 @@ class Account extends Component{
         body: JSON.stringify({
           email: this.state.email,
           first_name: this.state.first_name,
-          last_name: this.state.last_name,
-          password: this.state.password
+          last_name: this.state.last_name
       })
     })
     //Reruns the getUserData function to update the shown screen
@@ -144,7 +142,6 @@ class Account extends Component{
                   <Text>Location: {item.location.location_id} &nbsp; </Text>
               </View>
           )}
-          
         />
       </View>
     );

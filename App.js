@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { 
   Text, 
   TextInput, 
@@ -17,11 +18,13 @@ import HomeLoggedIn from './components/HomeLoggedIn';
 import Account from './components/Account';
 import Search from './components/Search';
 import ViewLocation from './components/ViewLocation';
+import Review from './components/Review';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
+const myIcon = <Ionicons name="rocket" size={30} color="#900" />;
 
 class App extends Component {
   static navigationOptions = {
@@ -39,6 +42,7 @@ class App extends Component {
           <Stack.Screen name="Account" component={Account} />
           <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="ViewLocation" component={ViewLocation} />
+          <Stack.Screen name="Review" component={Review} />
         </Stack.Navigator>
       </NavigationContainer>
     );

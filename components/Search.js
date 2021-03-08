@@ -11,6 +11,8 @@ import {
     FlatList
 } from 'react-native';
 
+global.thisLocationID;
+
 class Search extends Component{
     constructor(props){
         super(props);
@@ -33,10 +35,15 @@ class Search extends Component{
     }
 
     listLocations = () => {
-        return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + this.state.query,
+        // handle formatting query here or in handleSearchInput() ^ above
+        var newQ = (this.state.query.replace(" ", "%20"));
+        console.log(newQ);
+        // filters
+        
+        return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + newQ,
         { 
             method: 'GET',
-            headers: { 
+            headers: {
                 'Content-Type': 'application/json',
                 'X-Authorization': this.state.token
             }
@@ -53,7 +60,6 @@ class Search extends Component{
     }
 
     viewOneLocation = (location_id) => {
-        console.log("LocID: " + location_id);
         //focuses the view on one location
         return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + location_id,
         { 
@@ -67,8 +73,10 @@ class Search extends Component{
         .then((responseJson) => {
             this.setState({
                 viewOne: true,
-                oneLocationData: responseJson
+                oneLocationData: responseJson,
             });
+            global.thisLocationID = this.state.oneLocationData.location_id;
+            console.log(global.thisLocationID);
         })
         .catch((error) => {
             console.error(error);
@@ -81,11 +89,10 @@ class Search extends Component{
                 <View>
                     <Text style={styles.textCustom}>{this.state.oneLocationData.location_name} </Text>
                     <Text>City: {this.state.oneLocationData.location_town}, &nbsp; </Text>
-                    <Text>Overall rating: {this.state.oneLocationData.avg_overall_rating}. &nbsp; </Text>
-                    
+                    <Text>Overall rating: {this.state.oneLocationData.avg_overall_rating}. &nbsp; </Text>                    
                     <Button 
                         title="Submit Review"
-                        onPress={() => this.viewOneLocation(item.location_id)}
+                        onPress={() => this.props.navigation.navigate('Review')}
                     />
                 </View>
             );
@@ -95,17 +102,17 @@ class Search extends Component{
                     <TextInput 
                         style={styles.textCustom} 
                         placeholder="Search..."
-                        onChangeText={() => this.handleSearchInput}
+                        onChangeText={this.handleSearchInput}
                     />
                     <Button
                         title="Go"
-                        onPress={() => this.listLocations}
+                        onPress={() => this.listLocations()}
                     />
                     <FlatList
                         data={this.state.locationListData}
                         renderItem={({item}) => (
                             <View>
-                                <Button 
+                                <Button
                                     title={item.location_name}
                                     onPress={() => this.viewOneLocation(item.location_id)}
                                 />
