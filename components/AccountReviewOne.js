@@ -38,7 +38,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    oneStar(variable) {
+    oneStar = (variable) => {
         //hey now, you're a one star
         if (variable == "overallrating") {
             this.setState({
@@ -61,7 +61,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    twoStar(variable) {
+    twoStar = (variable) => {
         //hey now, you're a two star
         if (variable == "overallrating") {
             this.setState({
@@ -84,7 +84,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    threeStar(variable) {
+    threeStar = (variable) => {
         //hey now, you're a three star
         if (variable == "overallrating") {
             this.setState({
@@ -107,7 +107,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    fourStar(variable) {
+    fourStar = (variable) => {
         //hey now, you're a four star
         if (variable == "overallrating") {
             this.setState({
@@ -130,7 +130,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    fiveStar(variable) {
+    fiveStar = (variable) => {
         //hey now, you're an all star
         if (variable == "overallrating") {
             this.setState({
@@ -153,7 +153,7 @@ class AccountReviewOne extends Component{
         }
     }
 
-    iconBodyFunc(text, rating){
+    iconBodyFunc = (text, rating) => {
         if (rating == 0) {
             iconBody = (
                 <View style={styles.flexboxAcross}>
@@ -303,7 +303,7 @@ class AccountReviewOne extends Component{
         return iconBody;
     }
 
-    viewOneReview(userData, reviewID){
+    viewOneReview = (userData, reviewID) => {
         let oneReviewBody;
         for(let i = 0; i < userData.reviews.length; i++){
             if (userData.reviews[i].review.review_id == reviewID){
@@ -330,17 +330,17 @@ class AccountReviewOne extends Component{
         return oneReviewBody;
     }
 
-    handleReviewbody(text) {
+    handleReviewbody = (text) => {
         this.setState({reviewbody: text})
     }
 
-    updateReviewPage() {
+    updateReviewPage = () => {
         this.setState({
             updateReviewPage: true,
         })
     }
 
-    patchReview(locationID, reviewID) {
+    patchReview = (locationID, reviewID) => {
         //update the review
         console.log(this.state.overallrating + ", " + this.state.pricerating + ", " + this.state.qualityrating + ", " + this.state.clenlinessrating + ", " + this.state.reviewbody)
         return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID,
@@ -429,6 +429,7 @@ class AccountReviewOne extends Component{
                         <TextInput 
                             style={styles.textInput} 
                             multiline={true}
+                            onChangeText={this.handleReviewbody} 
                         ></TextInput>
                     </View>
                     <Button

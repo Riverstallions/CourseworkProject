@@ -424,6 +424,10 @@ class AccountReviews extends Component{
                         )}
                         keyExtractor={item => item.review.review_id.toString()}
                     />
+                    <Button
+                        title="Back to account"
+                        onPress={() => this.props.navigation.navigate("Home Logged In")}
+                    />
                 </View>
             );
         }

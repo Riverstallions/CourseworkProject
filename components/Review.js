@@ -350,6 +350,7 @@ class Review extends Component{
                     <TextInput 
                         style={styles.inputTextCustom} 
                         multiline={true}
+                        onChangeText={this.handleReviewbody}       
                     ></TextInput>
                 </View>
                 <Button
