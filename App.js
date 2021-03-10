@@ -1,15 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import styles from './components/styles';
-import { 
-  Text, 
-  TextInput, 
-  View, 
-  Button, 
-  Alert, 
-  TouchableOpacity 
-} from 'react-native';
 
 import Home from './components/Home';
 import SignIn from './components/signIn';
@@ -17,8 +8,11 @@ import SignUp from './components/signUp';
 import HomeLoggedIn from './components/HomeLoggedIn';
 import Account from './components/Account';
 import AccountReviews from './components/AccountReviews';
+import AccountReviewOne from './components/AccountReviewOne';
+import UserFavourites from './components/UserFavourites';
 import Search from './components/Search';
 import ViewLocation from './components/ViewLocation';
+import OneReview from './components/OneReview';
 import Review from './components/Review';
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -41,9 +35,12 @@ class App extends Component {
           <Stack.Screen name="Log In" component={SignIn} />
           <Stack.Screen name="Home Logged In" component={HomeLoggedIn} />
           <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="User Favourites" component={UserFavourites} />
           <Stack.Screen name="Account Reviews" component={AccountReviews} />
+          <Stack.Screen name="Account Review One" component={AccountReviewOne} />
           <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="View Location" component={ViewLocation} />
+          <Stack.Screen name="Location Review" component={OneReview}/>
           <Stack.Screen name="Review" component={Review} />
         </Stack.Navigator>
       </NavigationContainer>

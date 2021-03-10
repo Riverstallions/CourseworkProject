@@ -1,16 +1,12 @@
-import 'react-native-gesture-handler';
-import React, { Component } from 'react';
-import styles from './styles';
+import 'react-native-gesture-handler'
+import React, { Component } from 'react'
+import styles from './styles'
 import { 
   Text, 
   TextInput, 
   View, 
   Button, 
-  Alert, 
-  TouchableOpacity,
-  FlatList,
-  List
-} from 'react-native';
+} from 'react-native'
 
 class Account extends Component{
   constructor(props){
@@ -49,7 +45,7 @@ class Account extends Component{
         this.setState({ last_name: text})
     }
 
-  getUserData = () => {
+  getUserData() {
     //fetches the user data
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + global.sessionID,
     { 
@@ -79,7 +75,7 @@ class Account extends Component{
     });
   }
   
-  updateUserData = () => {
+  updateUserData() {
     //updates the user data
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + global.sessionID,
     { 

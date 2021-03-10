@@ -1,7 +1,8 @@
 import 'react-native-gesture-handler'
 import React, { Component } from 'react'
-import Ionicons from 'react-native-vector-icons/Ionicons'
 import styles from './styles'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { Divider } from 'react-native-elements'
 import { 
     Text, 
     TextInput, 
@@ -11,26 +12,33 @@ import {
     TouchableOpacity,
 } from 'react-native'
 
+
 const starOutline = <Ionicons name="star-outline" size={30}/>;
 const star = <Ionicons name="star" size={30} color={"#FFD700"}/>;
+global.thisReviewID;
+global.userSessionData;
 global.thisLocationID;
 
-class Review extends Component{
+class AccountReviewOne extends Component{
     constructor(props){
         super(props);
         this.state = {
+            token: global.sessionToken,
+            userData: global.userSessionData,
+            userID: global.sessionID,
+            reviews: [],
+            reviewID: global.thisReviewID,
+            updateReviewPage: false,
+            locationID: global.thisLocationID,
             overallrating: '1',
             pricerating: '1',
             qualityrating: '1',
             clenlinessrating: '1',
             reviewbody: '',
-            locationID: global.thisLocationID,
-            token: global.sessionToken,
-            reviewID: '',
         }
     }
 
-    oneStar = (variable) => {
+    oneStar(variable) {
         //hey now, you're a one star
         if (variable == "overallrating") {
             this.setState({
@@ -53,7 +61,7 @@ class Review extends Component{
         }
     }
 
-    twoStar = (variable) => {
+    twoStar(variable) {
         //hey now, you're a two star
         if (variable == "overallrating") {
             this.setState({
@@ -76,7 +84,7 @@ class Review extends Component{
         }
     }
 
-    threeStar = (variable) => {
+    threeStar(variable) {
         //hey now, you're a three star
         if (variable == "overallrating") {
             this.setState({
@@ -99,7 +107,7 @@ class Review extends Component{
         }
     }
 
-    fourStar = (variable) => {
+    fourStar(variable) {
         //hey now, you're a four star
         if (variable == "overallrating") {
             this.setState({
@@ -122,7 +130,7 @@ class Review extends Component{
         }
     }
 
-    fiveStar = (variable) => {
+    fiveStar(variable) {
         //hey now, you're an all star
         if (variable == "overallrating") {
             this.setState({
@@ -295,15 +303,49 @@ class Review extends Component{
         return iconBody;
     }
 
-    handleReviewbody = (text) => {
+    viewOneReview(userData, reviewID){
+        let oneReviewBody;
+        for(let i = 0; i < userData.reviews.length; i++){
+            if (userData.reviews[i].review.review_id == reviewID){
+                oneReviewBody = (
+                    <View style={styles.flexbox}>
+                        <Text style={styles.inputTextCustom}>Overall Rating: {userData.reviews[i].review.overall_rating}</Text>
+                        <Text style={styles.inputTextCustom}>Price Rating: {userData.reviews[i].review.price_rating}</Text>
+                        <Text style={styles.inputTextCustom}>Quality Rating: {userData.reviews[i].review.quality_rating}</Text>
+                        <Text style={styles.inputTextCustom}>Cleanliness Rating: {userData.reviews[i].review.clenliness_rating}</Text>
+                        <Text style={styles.inputTextCustom}>Comments: {userData.reviews[i].review.review_body}</Text>
+                        <Text style={styles.inputTextCustom}>Likes: {userData.reviews[i].review.likes}</Text>
+                        <Divider style={{ backgroundColor: 'blue' }}/>
+                    </View>
+                )
+                break;
+            } else {
+                oneReviewBody = (
+                    <View style={styles.flexbox}>
+                        <Text style={styles.textCustom}>Not found.</Text>
+                    </View>
+                )
+            }
+        }
+        return oneReviewBody;
+    }
+
+    handleReviewbody(text) {
         this.setState({reviewbody: text})
     }
 
-    postReview = (locationID) => {
-        //post the review
-        return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review',
+    updateReviewPage() {
+        this.setState({
+            updateReviewPage: true,
+        })
+    }
+
+    patchReview(locationID, reviewID) {
+        //update the review
+        console.log(this.state.overallrating + ", " + this.state.pricerating + ", " + this.state.qualityrating + ", " + this.state.clenlinessrating + ", " + this.state.reviewbody)
+        return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID,
         { 
-            method: 'POST',
+            method: 'PATCH',
             headers: { 
             'Content-Type': 'application/json',
             'X-Authorization': this.state.token
@@ -317,7 +359,27 @@ class Review extends Component{
             })
         })
         .then(() => {
-            this.props.navigation.navigate('Account Reviews');
+            Alert.alert("Updated this review");
+            this.props.navigation.navigate('Home Logged In');
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
+    deleteReview = (locationID, reviewID) => {
+        //delete the review
+        return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review/' + reviewID,
+        { 
+            method: 'DELETE',
+            headers: { 
+            'Content-Type': 'application/json',
+            'X-Authorization': this.state.token
+            }
+        })
+        .then(() => {
+            Alert.alert("Deleted this review");
+            this.props.navigation.navigate('Home Logged In');
         })
         .catch((error) => {
             console.error(error);
@@ -325,40 +387,58 @@ class Review extends Component{
     }
 
     render(){
-        return(
-            <View style={styles.flexbox}>
+        if (this.state.updateReviewPage == false){
+            return(
                 <View style={styles.flexboxDown}>
                     <View style={styles.flexboxAcross}>
-                        <Text style={styles.inputTextCustom}>Overall Rating:</Text>
-                        {this.iconBodyFunc('overallrating', this.state.overallrating)}
+                        {this.viewOneReview(this.state.userData, this.state.reviewID)}
                     </View>
-                    <View style={styles.flexboxAcross}>
-                        <Text style={styles.inputTextCustom}>Price Rating: </Text>
-                        {this.iconBodyFunc('pricerating', this.state.pricerating)}
-                    </View>
-                    <View style={styles.flexboxAcross}>
-                        <Text style={styles.inputTextCustom}>Quality Rating: </Text>
-                        {this.iconBodyFunc('qualityrating', this.state.qualityrating)}
-                    </View>
-                    <View style={styles.flexboxAcross}>
-                        <Text style={styles.inputTextCustom}>Cleanliness Rating: </Text>
-                        {this.iconBodyFunc('clenlinessrating', this.state.clenlinessrating)}
-                    </View>
+                    <Button
+                        title="Change Review"
+                        onPress={() => this.updateReviewPage()}
+                    />
+                    <Button
+                        title="Delete Review"
+                        onPress={() => this.deleteReview(this.state.locationID, this.state.reviewID)}
+                    />
                 </View>
-                <View>
-                    <Text style={styles.inputTextCustom}>Comments: </Text>
-                    <TextInput 
-                        style={styles.inputTextCustom} 
-                        multiline={true}
-                    ></TextInput>
+            );
+        } else {
+            return(
+                <View style={styles.flexbox}>
+                    <View style={styles.flexboxDown}>
+                        <View style={styles.flexboxAcross}>
+                            <Text style={styles.inputTextCustom}>Overall Rating:</Text>
+                            {this.iconBodyFunc('overallrating', this.state.overallrating)}
+                        </View>
+                        <View style={styles.flexboxAcross}>
+                            <Text style={styles.inputTextCustom}>Price Rating: </Text>
+                            {this.iconBodyFunc('pricerating', this.state.pricerating)}
+                        </View>
+                        <View style={styles.flexboxAcross}>
+                            <Text style={styles.inputTextCustom}>Quality Rating: </Text>
+                            {this.iconBodyFunc('qualityrating', this.state.qualityrating)}
+                        </View>
+                        <View style={styles.flexboxAcross}>
+                            <Text style={styles.inputTextCustom}>Cleanliness Rating: </Text>
+                            {this.iconBodyFunc('clenlinessrating', this.state.clenlinessrating)}
+                        </View>
+                    </View>
+                    <View>
+                        <Text style={styles.inputTextCustom}>Comments: </Text>
+                        <TextInput 
+                            style={styles.textInput} 
+                            multiline={true}
+                        ></TextInput>
+                    </View>
+                    <Button
+                        title="Update"
+                        onPress={() => this.patchReview(this.state.locationID, this.state.reviewID)}
+                    />
                 </View>
-                <Button
-                    title="Send"
-                    onPress={() => this.postReview(global.thisLocationID)}
-                />
-            </View>
-        );
+            );
+        }
     }
 }
 
-export default Review;
+export default AccountReviewOne;

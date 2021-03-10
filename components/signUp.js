@@ -1,14 +1,14 @@
-import 'react-native-gesture-handler';
-import React, { Component } from 'react';
-import { 
-    Text, 
+import 'react-native-gesture-handler'
+import React, { Component } from 'react'
+import styles from "./styles"
+import {
     TextInput, 
-    View, 
-    Button, 
+    Text,
+    View,
     StyleSheet, 
-    Alert, 
+    Alert,
     TouchableOpacity
-} from 'react-native';
+} from 'react-native'
 
 class SignUp extends Component{
     constructor(props){
@@ -39,7 +39,7 @@ class SignUp extends Component{
         this.setState({ last_name: text})
     }
 
-    signUp = () => {
+    signUp() {
         //handles the signing up function
         return fetch('http://10.0.2.2:3333/api/1.0.0/user',
         { 
@@ -53,65 +53,49 @@ class SignUp extends Component{
             })
         })
         .then(() => {
-            this.props.navigation.navigate('SignIn')
+            this.props.navigation.navigate('Log In')
         })
         .catch((error) => {
             console.error(error);
+            Alert.alert("Something went wrong, please make sure you have inputted the correct information.");
         });
     }
 
     render() {
         return(
-            <View>
-                <TextInput style={styles.textCustom} 
+            <View  style={styles.flexboxDown}>
+                <TextInput style={styles.inputTextCustom} 
                     placeholder="First name"
                     onChangeText = {this.handleFirstName}
                 />
-                <TextInput style={styles.textCustom} 
+                <TextInput style={styles.inputTextCustom} 
                     placeholder="Last name"
                     onChangeText = {this.handleLastName}
                 />
-                <TextInput style={styles.textCustom} 
+                <TextInput style={styles.inputTextCustom} 
                     placeholder="Email"
                     onChangeText = {this.handleEmail}
                 />
-                <TextInput style={styles.textCustom} 
+                <TextInput style={styles.inputTextCustom} 
                     placeholder="Password"
                     secureTextEntry = {true}
                     onChangeText = {this.handlePasswordInput}
                 />
-                <Button
-                    title="Sign Up"
+                <TouchableOpacity
+                    style={styles.buttonCustom}
                     onPress={() => this.signUp()}
-                />
-                <Button
-                    title="Log In"
+                >
+                    <Text style={styles.textCustom}>Sign Up</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={styles.buttonCustom}
                     onPress={() => this.props.navigation.navigate('Log In')}
-                />
+                >
+                    <Text style={styles.textCustom}>Log In</Text>
+                </TouchableOpacity>
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    flexbox: {
-        flex: 1,
-        flexDirection: "row",
-    },
-    flexboxSide: {
-        flexDirection: "column",
-        flex: .5
-    },
-    buttonCustom: {
-        elevation: 1,
-        backgroundColor: "#815481",
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-      },
-      textCustom: {
-        fontSize: 15,
-      }
-});
 
 export default SignUp;

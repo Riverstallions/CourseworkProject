@@ -1,29 +1,43 @@
-import { StyleSheet } from "react-native"
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-    buttonCustom: {
-        elevation: 1,
-        color: "red",
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-    },
-    textCustom: {
-        fontSize: 20,
-    },
-    flexbox: {
-        flex: 1,
-    },
-    flexboxDown: {
-        flex: .5,
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-    },
-    flexboxAcross: {
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-    },
-    textInputCustom: {
-        backgroundColor: "#815481",
-    }
+  buttonCustom: {
+    elevation: 1,
+    backgroundColor: '#0095ff',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 20
+  },
+  textCustom: {
+    fontSize: 20,
+    color: 'white'
+  },
+  inputTextCustom: {
+    fontSize: 20,
+    color: 'black'
+  },
+  textInput: {
+    backgroundColor: '#bcbbbb'
+  },
+  titleText: {
+    fontSize: 25,
+    color: 'black'
+  },
+  flexbox: {
+    flex: 1
+  },
+  flexboxDown: {
+    flex: 0.5,
+    justifyContent: 'space-around',
+    flexDirection: 'column'
+  },
+  flexboxDownSmall: {
+    flex: 0.25,
+    justifyContent: 'space-around',
+    flexDirection: 'column'
+  },
+  flexboxAcross: {
+    justifyContent: 'space-between',
+    flexDirection: 'row'
+  }
 })
