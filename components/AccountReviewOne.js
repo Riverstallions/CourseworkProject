@@ -37,7 +37,7 @@ class AccountReviewOne extends Component{
             reviewbody: '',
         }
     }
-
+    // The star functions handles when the stars are clicked, setting the variable to that number of stars
     oneStar = (variable) => {
         //hey now, you're a one star
         if (variable == "overallrating") {
@@ -153,6 +153,7 @@ class AccountReviewOne extends Component{
         }
     }
 
+    // Sets out the body for the icons, allowing me to reuse the code
     iconBodyFunc = (text, rating) => {
         if (rating == 0) {
             iconBody = (
@@ -303,6 +304,7 @@ class AccountReviewOne extends Component{
         return iconBody;
     }
 
+    // Sets out the body for viewing only one review
     viewOneReview = (userData, reviewID) => {
         let oneReviewBody;
         for(let i = 0; i < userData.reviews.length; i++){
@@ -334,6 +336,7 @@ class AccountReviewOne extends Component{
         this.setState({reviewbody: text})
     }
 
+    // sets the page to a "update" view rather than a "view" view
     updateReviewPage = () => {
         this.setState({
             updateReviewPage: true,
@@ -387,6 +390,7 @@ class AccountReviewOne extends Component{
     }
 
     render(){
+        // if the page is set to show all the reviews do this
         if (this.state.updateReviewPage == false){
             return(
                 <View style={styles.flexboxDown}>
@@ -403,6 +407,7 @@ class AccountReviewOne extends Component{
                     />
                 </View>
             );
+            //else if the page is set to show only one review that we have clicked on
         } else {
             return(
                 <View style={styles.flexbox}>

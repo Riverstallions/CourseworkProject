@@ -23,10 +23,12 @@ class Account extends Component{
     }
   }
 
+  // Makes sure to run getUserData when the page loads
   componentDidMount(){
     this.getUserData();
   }
 
+  // "handle" functions make sure that the variables are changed everytime the text changes
   handleEmail = (text) => {
     //validation here
         this.setState({email: text})
@@ -46,7 +48,7 @@ class Account extends Component{
     }
 
   getUserData() {
-    //fetches the user data
+    //fetches the user data, using the ID and token given from log in
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + global.sessionID,
     { 
         method: 'GET',
@@ -76,7 +78,7 @@ class Account extends Component{
   }
   
   updateUserData() {
-    //updates the user data
+    //updates the user data, using the token and id given at login
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + global.sessionID,
     { 
         method: 'PATCH',
@@ -90,7 +92,7 @@ class Account extends Component{
           last_name: this.state.last_name
       })
     })
-    //Reruns the getUserData function to update the shown screen
+    //Sends the user to the Logged in landing page
     .then(() => {
       this.props.navigation.navigate("Home Logged In");
     })

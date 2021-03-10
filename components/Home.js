@@ -7,6 +7,7 @@ import {
   TouchableOpacity
 } from 'react-native'
 
+// The landing page when users open the app
 class Home extends Component {
   render () {
     return (

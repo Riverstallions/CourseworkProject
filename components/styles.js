@@ -1,5 +1,7 @@
 import { StyleSheet } from 'react-native'
 
+// Handles all the style for all of the .js files, easy to maintain in one place and implement quickly all over my project
+
 export default StyleSheet.create({
   buttonCustom: {
     elevation: 1,

@@ -30,6 +30,7 @@ class Review extends Component{
         }
     }
 
+    // The star functions handles when the stars are clicked, setting the variable to that number of stars
     oneStar = (variable) => {
         //hey now, you're a one star
         if (variable == "overallrating") {
@@ -145,6 +146,7 @@ class Review extends Component{
         }
     }
 
+    // Sets out the body for the icons, allowing me to reuse the code
     iconBodyFunc(text, rating){
         if (rating == 0) {
             iconBody = (

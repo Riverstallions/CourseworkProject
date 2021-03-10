@@ -9,9 +9,7 @@ import HomeLoggedIn from './components/HomeLoggedIn';
 import Account from './components/Account';
 import AccountReviews from './components/AccountReviews';
 import AccountReviewOne from './components/AccountReviewOne';
-import UserFavourites from './components/UserFavourites';
 import Search from './components/Search';
-import ViewLocation from './components/ViewLocation';
 import OneReview from './components/OneReview';
 import Review from './components/Review';
 
@@ -35,11 +33,9 @@ class App extends Component {
           <Stack.Screen name="Log In" component={SignIn} />
           <Stack.Screen name="Home Logged In" component={HomeLoggedIn} />
           <Stack.Screen name="Account" component={Account} />
-          <Stack.Screen name="User Favourites" component={UserFavourites} />
           <Stack.Screen name="Account Reviews" component={AccountReviews} />
           <Stack.Screen name="Account Review One" component={AccountReviewOne} />
           <Stack.Screen name="Search" component={Search} />
-          <Stack.Screen name="View Location" component={ViewLocation} />
           <Stack.Screen name="Location Review" component={OneReview}/>
           <Stack.Screen name="Review" component={Review} />
         </Stack.Navigator>

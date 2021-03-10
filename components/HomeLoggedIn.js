@@ -23,7 +23,7 @@ class HomeLoggedIn extends Component {
     // handles the log out process:
     // API end point for logout, with the Authorisation header
     // Sets the loggedIn status to false, empties both the global and local token variables,
-    // Navigates to the Home screen
+    // Navigates to the Home screen afterwards
     return fetch('http://10.0.2.2:3333/api/1.0.0/user/logout',
       {
         method: 'POST',
@@ -46,6 +46,7 @@ class HomeLoggedIn extends Component {
   }
 
   render () {
+    // Simple buttons to navigate to different screens
     return (
       <View style={styles.flexboxDown}>
         <Button

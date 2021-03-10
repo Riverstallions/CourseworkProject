@@ -47,6 +47,7 @@ class Review extends Component {
       })
   }
 
+  // fetch and format the information for only one review that we have clicked
   getOneReview () {
     let oneReviewBody
     for (let i = 0; i < this.state.oneLocationData.location_reviews.length; i++) {

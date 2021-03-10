@@ -40,6 +40,7 @@ class Search extends Component{
         }
     }
 
+    // Runs these functions when the page loads
     componentDidMount(){
         this.listLocations();
         this.getUserFavouriteInfo();
@@ -50,6 +51,7 @@ class Search extends Component{
         this.setState({query: text})
     }
 
+    // fetch the user information to then return only the favourite_locations JSON data
     getUserFavouriteInfo() {
         //fetches the user favourites
         return fetch('http://10.0.2.2:3333/api/1.0.0/user/' + global.sessionID,
@@ -71,10 +73,10 @@ class Search extends Component{
         });
     }
 
+    // List the locations during search, default lists them all and reruns when you click "Go" button, with formatted query
     listLocations() {
         // handle formatting query here or in handleSearchInput() ^ above
         var newQ = (this.state.query.replace(" ", "%20"));
-        
         // filters
         return fetch('http://10.0.2.2:3333/api/1.0.0/find?q=' + newQ,
         { 
@@ -96,6 +98,7 @@ class Search extends Component{
         });
     }
 
+    // Runs through the list of users favourite locations and sees if those match with the location ID we are looking for
     favouritedStatus(){
         for(let i = 0; i < this.state.userFavouriteData.length; i++){
             console.log(this.state.userFavouriteData[i].location_id);
@@ -177,6 +180,7 @@ class Search extends Component{
         });
     }
 
+    
     iconFavouriteBodyFunc(location_id){
         let iconFavouriteBody;
         if (this.state.favourited == false) {
@@ -203,19 +207,20 @@ class Search extends Component{
         return iconFavouriteBody;
     }
 
+    // This is to send the user off to view a specific review already submitted
     sendToOneReview = (reviewID) => {
         global.thisReviewID = reviewID;
-        console.log(global.thisReviewID);
         this.props.navigation.navigate("Location Review");
     }
 
+    // This is just to set the variable for the locationID before sending the user off to the Review page where they can submit a review, this allows me to make sure the location ID is correct later
     sendToReview() {
         global.thisLocationID = locationID;
-        console.log(global.thisLocationID);
         this.props.navigation.navigate("Review");
     }
 
     render(){
+        // show this if the page is set to see the details about one location
         if (this.state.viewOne){
             return(
                 <View>
@@ -247,6 +252,7 @@ class Search extends Component{
                     />
                 </View>
             );
+            //else show the list of locations, with less data
         }else{
             return(
                 <View>
