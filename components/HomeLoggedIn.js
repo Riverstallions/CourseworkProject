@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
+import styles from './styles';
 import { 
   Text, 
   TextInput,
   View, 
-  Button, 
-  StyleSheet, 
+  Button,
   Alert, 
   TouchableOpacity 
 } from 'react-native';
@@ -52,34 +52,25 @@ class HomeLoggedIn extends Component{
     render(){
       return(
         <View>
-          <Button 
+          <Button
             title="View Account"
             onPress={() => this.props.navigation.navigate("Account")}
-            />
-          <Button 
+          />
+          <Button
+            title="View My Reviews"
+            onPress={() => this.props.navigation.navigate("Account Reviews")}
+          />
+          <Button
             title="Search"
             onPress={() => this.props.navigation.navigate("Search")}
-            />
-          <Button 
+          />
+          <Button
             title="Logout"
             onPress={() => this.LogOut()}
-            />
+          />
         </View>
       );
     }
 }
-
-const styles = StyleSheet.create({
-  buttonCustom: {
-      elevation: 1,
-      backgroundColor: "#815481",
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 12
-    },
-    textCustom: {
-      fontSize: 15,
-    }
-});
 
 export default HomeLoggedIn;

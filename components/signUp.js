@@ -86,7 +86,7 @@ class SignUp extends Component{
                 />
                 <Button
                     title="Log In"
-                    onPress={() => this.props.navigation.navigate('SignIn')}
+                    onPress={() => this.props.navigation.navigate('Log In')}
                 />
             </View>
         );

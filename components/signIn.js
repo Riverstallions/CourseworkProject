@@ -1,5 +1,6 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
+import styles from "./styles";
 import { 
     Text, 
     TextInput,
@@ -54,7 +55,8 @@ class SignIn extends Component{
             });
             global.sessionToken = responseJson.token;
             global.sessionID = responseJson.id;
-            this.props.navigation.navigate('HomeLoggedIn');
+            console.log(responseJson.token);
+            this.props.navigation.navigate('Home Logged In');
         })
         .catch((error) => {
             console.error(error);
@@ -81,32 +83,12 @@ class SignIn extends Component{
                 />
                 <Button
                     title="Sign Up"
-                    onPress={() => this.props.navigation.navigate('SignUp')}
+                    onPress={() => this.props.navigation.navigate('Sign Up')}
                 />
             </View>
         );
     }
 }
 
-const styles = StyleSheet.create({
-    flexbox: {
-        flex: 1,
-        flexDirection: "row",
-    },
-    flexboxSide: {
-        flexDirection: "column",
-        flex: .5
-    },
-    buttonCustom: {
-        elevation: 1,
-        backgroundColor: "#815481",
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-    },
-    textCustom: {
-        fontSize: 15,
-    }
-});
 
 export default SignIn;

@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
+import styles from './styles';
 import { 
   Text, 
   TextInput, 
   View, 
   Button, 
-  StyleSheet, 
   Alert, 
   TouchableOpacity,
   FlatList,
@@ -96,7 +96,7 @@ class Account extends Component{
     })
     //Reruns the getUserData function to update the shown screen
     .then(() => {
-      this.props.navigation.navigate("HomeLoggedIn");
+      this.props.navigation.navigate("Home Logged In");
     })
     .catch((error) => {
         console.error(error);
@@ -134,37 +134,9 @@ class Account extends Component{
           title="Update"
           onPress={() => this.updateUserData()}
         />
-        <FlatList
-          data={this.state.reviews}
-          renderItem={({item}) => (
-              <View>
-                  <Text>Review: {item.review.review_id} &nbsp; </Text>
-                  <Text>Location: {item.location.location_id} &nbsp; </Text>
-              </View>
-          )}
-        />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  buttonCustom: {
-      elevation: 1,
-      backgroundColor: "#815481",
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 12
-    },
-    textCustom: {
-      fontSize: 20,
-    },
-    flexbox: {
-      flex: 1
-    },
-    changeUserDetails: {
-      flex: .2
-    }
-});
 
 export default Account;

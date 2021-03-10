@@ -1,12 +1,12 @@
 import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import styles from './styles';
 import { 
     Text, 
     TextInput, 
     View, 
     Button, 
-    StyleSheet, 
     Alert, 
     TouchableOpacity,
     FlatList,
@@ -14,7 +14,7 @@ import {
 } from 'react-native';
 
 const starOutline = <Ionicons name="star-outline" size={30}/>;
-const star = <Ionicons name="star" size={30}/>;
+const star = <Ionicons name="star" size={30} color={"#FFD700"}/>;
 global.thisLocationID;
 
 class Review extends Component{
@@ -28,6 +28,8 @@ class Review extends Component{
             reviewbody: '',
             locationID: global.thisLocationID,
             token: global.sessionToken,
+            reviewID: '',
+            postedReview: false,
         }
     }
 
@@ -147,7 +149,27 @@ class Review extends Component{
     }
 
     iconBodyFunc(text, rating){
-        if (rating == 1){
+        if (rating == 0) {
+            iconBody = (
+                <View style={styles.flexboxAcross}>
+                    <TouchableOpacity 
+                        onPress={() => this.oneStar(text)}
+                    >{starOutline}</TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => this.twoStar(text)}
+                    >{starOutline}</TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => this.threeStar(text)}
+                    >{starOutline}</TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => this.fourStar(text)}
+                    >{starOutline}</TouchableOpacity>
+                    <TouchableOpacity 
+                        onPress={() => this.fiveStar(text)}
+                    >{starOutline}</TouchableOpacity>
+                </View>
+            )
+        } else if (rating == 1){
             iconBody = (
                 <View style={styles.flexboxAcross}>
                     <TouchableOpacity 
@@ -247,7 +269,7 @@ class Review extends Component{
                     >{starOutline}</TouchableOpacity>
                 </View>
             )
-        } else if (rating == 5){
+        } else {
             iconBody = (
                 <View style={styles.flexboxAcross}>
                     <TouchableOpacity 
@@ -280,10 +302,9 @@ class Review extends Component{
         this.setState({reviewbody: text})
     }
 
-    postReview = () => {
-        //posts the review
-
-        return fetch('http://10.0.2.2:3333/api/1.0.0/location/1/review',
+    postReview = (locationID) => {
+        //post the review
+        return fetch('http://10.0.2.2:3333/api/1.0.0/location/' + locationID + '/review',
         { 
             method: 'POST',
             headers: { 
@@ -297,6 +318,9 @@ class Review extends Component{
                 clenliness_rating: parseInt(this.state.clenlinessrating),
                 review_body: this.state.reviewbody
             })
+        })
+        .then(() => {
+            this.props.navigation.navigate('Account');
         })
         .catch((error) => {
             console.error(error);
@@ -333,39 +357,11 @@ class Review extends Component{
                 </View>
                 <Button
                     title="Send"
-                    onPress={() => this.postReview()}
+                    onPress={() => this.postReview(global.thisLocationID)}
                 />
             </View>
         );
     }
 }
-
-const styles = StyleSheet.create({
-    buttonCustom: {
-        elevation: 1,
-        backgroundColor: "#815481",
-        borderRadius: 10,
-        paddingVertical: 10,
-        paddingHorizontal: 12
-    },
-    textCustom: {
-        fontSize: 20,
-    },
-    flexbox: {
-        flex: 1,
-    },
-    flexboxDown: {
-        flex: .5,
-        justifyContent: 'space-between',
-        flexDirection: 'column',
-    },
-    flexboxAcross: {
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-    },
-    textInputCustom: {
-        backgroundColor: "#815481",
-    }
-});
 
 export default Review;
